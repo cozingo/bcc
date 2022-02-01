@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div id="app" style="padding: .5rem 1.5rem">
+	<section class="container font-weight-bold">
+		<div class="row mb-80">
+			<div class="col-12 text-center">
+				<img src="https://i.ibb.co/qYs92xv/logo.png" style="height: 100px;">
+			</div>
+			<div class="col-6"></div>
+		</div>
+
+		<div class="row mb-80">
+			<div class="col-6">
+				<table>
+					<tr>
+						<td class="pr-5">
+							<strong>Provider &nbsp;&nbsp;:</strong>
+						</td>
+						<td>
+							<input type="text" class="form-control" id="provider-input" placeholder="Provider"
+							       v-model="provider">
+							<span id="provider-input-text" style="display: none">{{ provider }}</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="pr-5">
+							<strong>Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+						</td>
+						<td>
+							<input type="text" class="form-control" id="date-input" placeholder="Date" v-model="date">
+							<span id="date-input-text" style="display: none">{{ date }}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-6 d-flex flex-row-reverse">
+				<input type="email" class="text-center border-dark" style="height: 40px" placeholder="Series">
+			</div>
+		</div>
+
+		<div class="row mb-80">
+			<div class="col-4 col-lg-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><b>Pt</b>&nbsp;</span>
+					</div>
+					<input type="text" class="form-control" v-model="pt">
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width: 58px">%&nbsp;</span>
+					</div>
+					<input type="text" class="form-control" v-model="pt_p">
+				</div>
+				<div class="input-group mt-4">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><b>Pt&nbsp;</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="pt_g">
+					<span class="input-group-text"><i>gr&nbsp;</i></span>
+				</div>
+			</div>
+			<div class="col-4 col-lg-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><b>Pd</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="pd">
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width: 58px">%&nbsp;</span>
+					</div>
+					<input type="text" class="form-control" v-model="pd_p">
+				</div>
+				<div class="input-group mt-4">
+					<div class="input-group-prepend" style="width: 56px">
+						<span class="input-group-text"><b>Pd&nbsp;</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="pd_g">
+					<span class="input-group-text"><i>gr&nbsp;</i></span>
+				</div>
+			</div>
+			<div class="col-4 col-lg-4">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><b>Rh</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="rh">
+				</div>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text" style="width: 60px">%&nbsp;</span>
+					</div>
+					<input type="text" class="form-control" v-model="rh_p">
+				</div>
+				<div class="input-group mt-4">
+					<div class="input-group-prepend" style="width: 60px">
+						<span class="input-group-text"><b>Rh&nbsp;</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="rh_g">
+					<span class="input-group-text"><i>gr&nbsp;</i></span>
+				</div>
+			</div>
+			<div class="col-6"></div>
+		</div>
+		<div class="row mb-80"></div>
+		<div class="row mb-80">
+			<div class="col-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text"><b>Net Weight</b></span>
+					</div>
+					<input type="text" class="form-control" v-model="weight">
+					<span class="input-group-text"><i>Kg</i></span>
+				</div>
+			</div>
+			<div class="col-6">
+				<h4 v-show="calc !== '0.00'" class="text-center text-muted position-relative" style="top: -40px">
+					For kg : {{ ( calc / weight ).toFixed(2) }} $
+				</h4>
+				<h2 v-show="calc" class="text-center position-relative" :style="{top: calc !== '0.00' ? '-35px' : 0}">
+					Total: {{ calc }} $
+				</h2>
+				<!--				<h1 v-show="calc" class="mt-5 text-center">-->
+				<!--					80 % ≈ {{ Number(calc * .8).toFixed(2) }} $-->
+				<!--				</h1>-->
+			</div>
+		</div>
+
+		<div class="row mb-80">
+			<div class="col-5 d-flex flex-column">
+				<span>Sharjah, UAE</span>
+				<span>P6-104 - Saif Zone</span>
+				<span>Tel : +971568630743</span>
+				<br>
+				<span style="text-decoration: underline">
+					<a href="http://bcc-uae.com">bcc-uae.com</a>
+				</span>
+				<span>Email: info@bcc-uae.com</span>
+			</div>
+		</div>
+	</section>
+</div>
+</body>
+<script src="https://unpkg.com/vue"></script>
+<script>
+	new Vue({
+		el : '#app',
+		data() {
+			return {
+				pt : 950,
+				pt_p : 95,
+				pt_g : 0,
+				pd : 2350,
+				pd_p : 95,
+				pd_g : 3.25,
+				rh : 14500,
+				rh_p : 85,
+				rh_g : 3,
+				weight : 0,
+
+				provider : '',
+				date : ''
+			}
+		},
+		computed : {
+			calc() {
+				let res = 0
+
+				if( this.pd && this.pd_g && this.pd_p )
+					res += ( this.pd / 31.1 ) * this.pd_g * ( this.pd_p / 100.0 )
+				if( this.pt && this.pt_g && this.pt_p )
+					res += ( this.pt / 31.1 ) * this.pt_g * ( this.pt_p / 100.0 )
+				if( this.rh && this.rh_g && this.rh_p )
+					res += ( this.rh / 31.1 ) * this.rh_g * ( this.rh_p / 100.0 )
+
+				return ( res * this.weight ).toFixed(2);
+			},
+			formattedDate() {
+
+			}
+		},
+		created() {
+			this.initData()
+			let date = new Date()
+			this.date = date.getDate() + '.' + ( date.getMonth() + 1 ) + '.' + date.getFullYear()
+		},
+		watch : {
+			pt : function (val) {
+				localStorage.setItem('pt', val)
+			},
+			pt_p : function (val) {
+				localStorage.setItem('pt_p', val)
+			},
+			pt_g : function (val) {
+				localStorage.setItem('pt_g', val)
+			},
+
+			pd : function (val) {
+				localStorage.setItem('pd', val)
+			},
+			pd_p : function (val) {
+				localStorage.setItem('pd_p', val)
+			},
+			pd_g : function (val) {
+				localStorage.setItem('pd_g', val)
+			},
+
+			rh : function (val) {
+				localStorage.setItem('rh', val)
+			},
+			rh_p : function (val) {
+				localStorage.setItem('rh_p', val)
+			},
+			rh_g : function (val) {
+				localStorage.setItem('rh_g', val)
+			},
+		},
+		methods : {
+			initData() {
+				if( localStorage.getItem('pt') )
+					this.pt = localStorage.getItem('pt')
+				if( localStorage.getItem('pt_p') )
+					this.pt_p = localStorage.getItem('pt_p')
+				if( localStorage.getItem('pt_g') )
+					this.pt_g = localStorage.getItem('pt_g')
+
+				if( localStorage.getItem('pd') )
+					this.pd = localStorage.getItem('pd')
+				if( localStorage.getItem('pd_p') )
+					this.pd_p = localStorage.getItem('pd_p')
+				if( localStorage.getItem('pd_g') )
+					this.pd_g = localStorage.getItem('pd_g')
+
+				if( localStorage.getItem('rh') )
+					this.rh = localStorage.getItem('rh')
+				if( localStorage.getItem('rh_p') )
+					this.rh_p = localStorage.getItem('rh_p')
+				if( localStorage.getItem('rh_g') )
+					this.rh_g = localStorage.getItem('rh_g')
+			}
+		}
+	});
+</script>
+</html>
+
+<style>
+    @media print {
+        #provider-input {
+            display: none;
+        }
+
+        #provider-input-text {
+            display: block !important;
+        }
+
+        #date-input {
+            display: none;
+        }
+
+        #date-input-text {
+            display: block !important;
+        }
+
+        div.input-group input {
+            border: 2px solid black;
+        }
+        div.input-group span {
+            border: 2px solid black;
+        }
+    }
+
+    .mb-80 {
+        margin-bottom: 80px;
+    }
+
+    input {
+        font-weight: bold;
+        font-size: 1.5rem !important;
+    }
+
+    span, strong {
+        font-size: 1.5rem !important;
+    }
+</style>
